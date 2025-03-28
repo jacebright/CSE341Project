@@ -31,7 +31,7 @@ const createContact = async (req, res) => {
     };
     const response = await mongodb.getDatabase().db().collection('Contacts').insertOne(contact);
     if (response.acknowledged) {
-        res.status(204).send(response._id);
+        res.status(204).send(response.body);
     } else {
         res.status(500).json(response.error || 'Some error occurred while updating the contact.');
     }
@@ -50,6 +50,7 @@ const updateContact = async (req, res) => {
     const response = await mongodb.getDatabase().db().collection('Contacts').replaceOne({ _id: contactId}, contact);
     if (response.modifiedCount > 0) {
         res.status(204).send();
+
     } else {
         res.status(500).json(response.error || 'Some error occurred while updating the user.');
     }
